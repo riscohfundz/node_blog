@@ -68,12 +68,6 @@ conn.connect((err)=>{
 
 })
 
-app.get("/READ",(req,res)=>{
-    con.connect((err)=>{
-        if (err) throw err
-        var sql = `UPDATE * FROM apple_stores  `
-    })
-})
 
 
 app.listen(port,()=>{
