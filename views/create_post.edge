@@ -1,0 +1,56 @@
+
+
+@layout("layouts/app")
+
+@section("main_content")
+
+
+
+  <!-- Page Header-->
+        <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Create post</h1>
+                            <span class="subheading">A Blog Theme by NodeBlog</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+
+    <form method ="POST" action ="/store/post">
+            <div class="mb-3">
+                    <label form="title" class="form-label">Title</label>
+                    <input name="title" type="text"class ="form-control" id="title" placeholder="Enter title">
+            </div>
+
+             <div class="mb-3">
+                    <label form="description" class="form-label">Description</label>
+                    <input name="description" type="text" class="form-control" id="description" placeholder="Enter description">
+            </div>
+    
+            <div class="mb-3">
+                <label form="content" class="form-label">Content texarea</label>
+                <textarea name="content" class="form-control" id="content" rows="3"></textarea>
+            </div>
+
+                <button class="btn btn-primary col-sm" type="submit">Create Post</button>
+        <br><br>
+    </form>
+
+       </div>
+      </div>
+ </div>
+
+
+
+@endsection
