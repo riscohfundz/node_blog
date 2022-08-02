@@ -4,11 +4,15 @@ const express = require('express')
 
 const path = require('path')
 
-const {config, engine} = require('express-edge')
+const {config, engine} = require("express-edge")
+
 
 const app = express()
 
 const port = 3000
+
+const expressFileUpload = require("express-fileupload")
+
 
 require ('dotenv').config()
 // console.log(process.env);
@@ -22,7 +26,7 @@ app.set("views",`${__dirname}/views`)
 app.use(express.urlencoded({extended : true}))
 
 
-
+app.use(expressFileUpload())
 
 
 // var con = mysql.createConnection({
@@ -33,9 +37,20 @@ app.use(express.urlencoded({extended : true}))
 // })
 
 
+const mysql = require("mysql")
+
+const pool = mysql.createPool({
+    connectionLimit : 100,
+    host : process.env.DB_HOST,
+    user : process.env.DB_USER,
+    password : process.env.DB_PASS,
+    database : process.env.DB_DATABASE
+    })
+
+
 
 app.get("/create_db",(req,res)=>{
-    con.connect((err)=>{
+    pool.getConnection((err,connection)=>{
 
         if (err) throw err
 
@@ -43,7 +58,7 @@ app.get("/create_db",(req,res)=>{
 
         var sql = "CREATE DATABASE project"
 
-        con.query(sql,(err,result)=>{
+        pool.query(sql,(err,result)=>{
             if (err) throw err
 
             res.send(`${result} is created successfully`)
@@ -55,17 +70,39 @@ app.get("/create_db",(req,res)=>{
 
 app.get("/create_table",(req,res)=>{
 
-        con.connect((err)=>{
+        pool.connection((err,connection)=>{
 
         console.log("we are connected!");
 
         var sql = "CREATE TABLE node_apps"
         sql += "(id INT AUTO_INCREMENT PRIMARY KEY, "
         sql += "title VARCHAR (225), "
-        sql += "description VARCHAR (225), "
+        sql += "subtitle VARCHAR (225), "
         sql += "content VARCHAR (200))"
 
-        con.query(sql,(err,result)=>{ 
+        pool.query(sql,(err,result)=>{ 
+            if (err) throw err
+
+            res.send("Table created successfully!")
+
+        })
+    })
+})
+             
+               
+   app.get("/create_table",(req,res)=>{
+
+        pool.connection((err,connection)=>{
+
+        console.log("we are connected!");
+
+        var sql = "CREATE TABLE node_apps"
+        sql += "(id INT AUTO_INCREMENT PRIMARY KEY, "
+        sql += "title VARCHAR (225), "
+        sql += "subtitle VARCHAR (225), "
+        sql += "content VARCHAR (200))"
+
+        pool.query(sql,(err,result)=>{ 
             if (err) throw err
 
             res.send("Table created successfully!")
@@ -74,31 +111,40 @@ app.get("/create_table",(req,res)=>{
     })
 })
 
+
+
+
+
     const homeRiotes = require("./server/riotes/homePost")
-    app.get("/",homeRiotes)
-    app.get("/about", homeRiotes)
-   app.get("/post",homeRiotes)
-   app.get("/contact",homeRiotes)
+    app.use("/",homeRiotes)
+//     app.get("/about", homeRiotes)
+//    app.get("/post",homeRiotes)
+//    app.get("/contact",homeRiotes)
 
 
 
     const postRiotes = require("./server/riotes/post")
-    app.get("/create/post", postRiotes)
-     app.post("/store/post", postRiotes)
+    app.use("/", postRiotes)
+    //  app.post("/store/post", postRiotes)
 
        
-    
+      const backend_post = require("./server/backend/back_rioutes/back_postRioutes")
+      app.get("/backend/dashboard",backend_post)
+      app.get("/backend/backPost",backend_post)
+
+
+
     app.get("/update",(req,res)=>{
-        con.connect((err)=>{
+        pool.getConnection((err,connection)=>{
             if (err) throw err
             console.log("connected");
 
-            const title2= `learning html is awesome `
-            const description = `learning css is awesome`
+            const title2= `learning javascript is awesome `
+            const subtitle = `learning laravel is awesome`
             const content = `learning bootstraps is awesome `
-
-            var sql = `UPDATE node_apps SET title = '${title2}', description = '${description}', content = '${content}' WHERE id = 1`
-            con.query(sql,(err,result)=>{
+            const username = `Riscoh_fundz❤💖😍`
+            var sql = `UPDATE node_apps SET title ='${title2}',username ='${username}',subtitle ='${subtitle}', content = '${content}' WHERE id = 19`
+            pool.query(sql,(err,result)=>{
                 if (err) throw err
                 res.send(`updated succesfully ${result}`)
                

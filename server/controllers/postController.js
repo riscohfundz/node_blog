@@ -1,4 +1,6 @@
 
+
+const path = require('path')
 const mysql = require("mysql")
 
 const pool = mysql.createPool({
@@ -18,22 +20,40 @@ exports.store = (req,res)=>{
     pool.getConnection((err,connection)=>{
         if (err) throw err
 
-        console.log("connected");
-        console.log(req.body);
-        var title = (req.body.title);
-        var description = (req.body.description)
-        var content = (req.body.content)
-        console.log(title);
+        // console.log("connected");
+        // console.log(req.body);
+        // var title = (req.body.title);
+        // var description = (req.body.description)
+        // var content = (req.body.content)
+        // console.log(title);
 
-        console.log(description);
+        // console.log(description);
 
-        console.log(content);
+        // console.log(content);
 
-        var sql = `INSERT INTO node_apps (title, description, content) VALUES ('${title}', '${description}', '${content}')`
-        pool.query(sql,(err,data)=>{
-            if (err) throw err
-            console.log();("data created successfully")
+        // console.log(req.files);
+        const {post_img} = req.files
+
+        const {title, subtitle, content} = req.body
+        
+        const filename = path.resolve(__dirname,"../../public/post_image/",post_img.name)
+
+         post_img.mv(filename,(err,connection)=>{
+            var sql = `INSERT INTO node_apps SET title=?, subtitle=?, content=?`
+
+            pool.query(sql,[title, subtitle, content],(err,data)=>{
+                if (err) throw err
+                    res.redirect("/")
+    
+                //  res.send("data inserted successfully")
+            })
+       
+    
         })
-    })
-    res.redirect("/")
+
+        })
+
+
+
+       
 }

@@ -7,6 +7,7 @@
 
 
 
+
   <!-- Page Header-->
         <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">
@@ -29,14 +30,14 @@
                   @each(post in post)
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="/post">
+                        <a href="/post/{{post.id}}">
                             <h2 class="post-title">{{post.title}}</h2>
-                            <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
+                            <h3 class="post-subtitle">{{post.content}}</h3>
                         </a>
                         <p class="post-meta">
                             Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 24, 2022
+                            <a href="#!">{{post.username}}</a>
+                            on{{post.created_at.toDateString()}}
                         </p>
                     </div>
                    @endeach

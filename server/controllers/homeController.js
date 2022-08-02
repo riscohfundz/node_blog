@@ -20,7 +20,8 @@ exports.index = (req, res) =>{
       connection.query(sql,(err,post)=>{
          connection.release()
          if (!err){
-            res.render('index',{post})
+            res.render("index",{
+               post: post})
          }else{
             throw err
          }
@@ -31,14 +32,30 @@ exports.index = (req, res) =>{
 
     }
 
+  
+
  exports.about = (req, res)=>{
 
     res.render("about")
+   
  }
 
  exports.post = (req, res)=>{
+   pool.getConnection((err,connection)=>{
+    if (err) throw err;
+    const para = req.params.id
+    var sql = `SELECT * FROM node_apps WHERE id=?`
+    connection.query(sql,[para],(err,post)=>{
+      if (!err){
+         connection.release()
+         res.render("post",{post:post[0]})
+      }else{
+         throw err;
+      }
+    })
+
+   })
     
-    res.render("post")
  }
 
  exports.contact = (req, res)=>{
