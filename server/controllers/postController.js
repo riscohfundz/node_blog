@@ -34,14 +34,14 @@ exports.store = (req,res)=>{
         // console.log(req.files);
         const {post_img} = req.files
 
-        const {title, subtitle, content} = req.body
+        const {title, subtitle, content,username} = req.body
         
         const filename = path.resolve(__dirname,"../../public/post_image/",post_img.name)
 
          post_img.mv(filename,(err,connection)=>{
-            var sql = `INSERT INTO node_apps SET title=?, subtitle=?, content=?`
+            var sql = `INSERT INTO node_apps SET title=?, subtitle=?, content=?, username=?, post_img=?`
 
-            pool.query(sql,[title, subtitle, content],(err,data)=>{
+            pool.query(sql,[title, subtitle, content, username,`/post_image/${post_img.name}`],(err,data)=>{
                 if (err) throw err
                     res.redirect("/")
     
