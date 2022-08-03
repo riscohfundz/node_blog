@@ -32,7 +32,7 @@ exports.store = (req,res)=>{
         // console.log(content);
 
         // console.log(req.files);
-        const {post_img} = req.files
+        const {post_img} = req.file
 
         const {title, subtitle, content,username} = req.body
         
