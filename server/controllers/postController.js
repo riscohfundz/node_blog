@@ -1,6 +1,7 @@
 
 
 const path = require('path')
+
 const mysql = require("mysql")
 
 const pool = mysql.createPool({
@@ -39,6 +40,7 @@ exports.store = (req,res)=>{
         const filename = path.resolve(__dirname,"../../public/post_image/",post_img.name)
 
          post_img.mv(filename,(err,connection)=>{
+            
             var sql = `INSERT INTO node_apps SET title=?, subtitle=?, content=?, username=?, post_img=?`
 
             pool.query(sql,[title, subtitle, content, username,`/post_image/${post_img.name}`],(err,data)=>{
@@ -52,8 +54,5 @@ exports.store = (req,res)=>{
         })
 
         })
-
-
-
-       
+      
 }

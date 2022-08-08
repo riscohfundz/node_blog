@@ -1,4 +1,5 @@
 
+const path = require('path')
 
 const mysql = require("mysql")
 
@@ -37,20 +38,37 @@ exports.backPost = (req, res)=>{
     pool.getConnection((err,connection)=>{
         if (err) throw err;
 
-        var sql = `SELECT * FROM node_apps`
+        // console.log(req.files) 
+        
+        // const {post_img} = req.files
 
-        connection.query(sql,(err,post)=>{
-            connection.release()
+        // const {title, subtitle, content, username} = req.body
 
-            if (!err){
-                res.render("backend/backPost",{
-                    post:post
-                })
+        // const filename = path.resolve(__dirname,`../..public/backend/post_img2`,post_img.name)
 
-            }else{
-                throw err
-            }
+        // post_img.mv(filename,(err,connection)=>{
+            // var sql = `SELECT * FROM node_apps title=?, subtitle=?, content=?, username=?`
+            var sql = `SELECT * FROM node_apps `
 
+            // pool.query(sql,[title, subtitle, content, username],`/post_img2/${post_img.name}`,(err,post)=>{
+                connection.query(sql,(err,post)=>{
+                connection.release()
+    
+                if (!err){
+                    res.render("backend/backPost",{
+                        post:post
+                    })
+    
+                }else{
+                    throw err
+                }
+    
+            })
+        // })
+            
         })
-    })
+
+     
+
+    
 }

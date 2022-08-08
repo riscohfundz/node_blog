@@ -28,6 +28,9 @@ app.use(express.urlencoded({extended : true}))
 
 app.use(expressFileUpload())
 
+const user = require("./middleware/postStore") 
+
+app.use("/store/post", user)
 
 // var con = mysql.createConnection({
 //     host: "localhost",
@@ -70,7 +73,7 @@ app.get("/create_db",(req,res)=>{
 
 app.get("/create_table",(req,res)=>{
 
-        pool.connection((err,connection)=>{
+        pool.getConnection((err,connection)=>{
 
         console.log("we are connected!");
 
@@ -92,7 +95,7 @@ app.get("/create_table",(req,res)=>{
                
    app.get("/create_table",(req,res)=>{
 
-        pool.connection((err,connection)=>{
+        pool.getConnection((err,connection)=>{
 
         console.log("we are connected!");
 
@@ -132,7 +135,8 @@ app.get("/create_table",(req,res)=>{
       app.get("/backend/dashboard",backend_post)
       app.get("/backend/backPost",backend_post)
 
-
+      const register = require("./server/riotes/user")
+      app.get("/auth/user", register)
 
     app.get("/update",(req,res)=>{
         pool.getConnection((err,connection)=>{
@@ -154,7 +158,7 @@ app.get("/create_table",(req,res)=>{
 
 
     app.get("/read_update",(req,res)=>{
-        con.connect((err)=>{
+        pool.getConnection((err,connection)=>{
             var sql = `SELECT * FROM node_apps `
 
             con.query(sql,(err,data)=>{
@@ -165,7 +169,7 @@ app.get("/create_table",(req,res)=>{
     })
 
    app.get("/read_one",(req,res)=>{
-    con.connect((err)=>{
+    pool.getConnection((err,connection)=>{
         var sql = `SELECT * FROM node_apps WHERE title = 'welcome to mysql'`
         con.query(sql,(err,data)=>{
             res.send(data)
