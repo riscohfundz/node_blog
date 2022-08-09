@@ -5,5 +5,5 @@ module.exports = (req, res, next)=>{
     if (!req.files ||!title ||!subtitle ||!content ||!username){
     return res.redirect("/create/post")
     }
-    next()
+    
 }
