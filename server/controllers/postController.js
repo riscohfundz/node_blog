@@ -13,7 +13,11 @@ const pool = mysql.createPool({
     })
 
 exports.create = (req,res)=>{
-    res.render("create_post")
+    if (req.session.userId){
+         return res.render("create_post")
+    }
+         return res.redirect("/auth/login")
+
 }
 
 
@@ -47,7 +51,6 @@ exports.store = (req,res)=>{
                 if (err) throw err
                     res.redirect("/")
     
-                //  res.send("data inserted successfully")
             })
        
     

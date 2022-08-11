@@ -11,12 +11,15 @@
   "author": "Riscoh__fundz",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-edge": "^2.0.2",
     "express-fileupload": "^1.4.0",
+    "express-session": "^1.17.3",
     "file": "^0.2.2",
     "mysql": "^2.18.1",
+    "session": "^0.1.0",
     "upload": "^1.1.1"
   }
 }

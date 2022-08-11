@@ -34,41 +34,36 @@ exports.dash = (req, res)=>{
 
 
 
-exports.backPost = (req, res)=>{
-    pool.getConnection((err,connection)=>{
+    exports.backPost = (req, res)=>{
+     pool.getConnection((err,connection)=>{
         if (err) throw err;
+        // console.log("we are connected");
 
-        // console.log(req.files) 
+
+        console.log(req.files);
+    })
+}
         
         // const {post_img} = req.files
 
         // const {title, subtitle, content, username} = req.body
 
-        // const filename = path.resolve(__dirname,`../..public/backend/post_img2`,post_img.name)
-
+        // const filename = path.resolve(__dirname,"../../../public/backend/post_img2/",post_img.name)
         // post_img.mv(filename,(err,connection)=>{
-            // var sql = `SELECT * FROM node_apps title=?, subtitle=?, content=?, username=?`
-            var sql = `SELECT * FROM node_apps `
+        // var sql = `SELECT * FROM node_apps title=?, subtitle=?, content=?, username=?, post_img=?`
+        // pool.query(sql,[title, subtitle, content, username],`/post_img2/${post_img.name}`,(err,post)=>{
+        //         connection.release()
+        //         if (!err){
+        //             res.render("backend/backPost",{
+        //                 post:post
+        //             })
+    
+        //         }else{
+        //             throw err
+        //         }
 
-            // pool.query(sql,[title, subtitle, content, username],`/post_img2/${post_img.name}`,(err,post)=>{
-                connection.query(sql,(err,post)=>{
-                connection.release()
-    
-                if (!err){
-                    res.render("backend/backPost",{
-                        post:post
-                    })
-    
-                }else{
-                    throw err
-                }
-    
-            })
         // })
             
-        })
-
-     
-
+        // })
     
-}
+   
