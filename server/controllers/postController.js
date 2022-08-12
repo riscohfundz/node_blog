@@ -1,10 +1,10 @@
 
 
-const path = require('path')
+    const path = require('path')
 
-const mysql = require("mysql")
+    const mysql = require("mysql")
 
-const pool = mysql.createPool({
+    const pool = mysql.createPool({
     connectionLimit : 100,
     host : process.env.DB_HOST,
     user : process.env.DB_USER,
@@ -12,8 +12,8 @@ const pool = mysql.createPool({
     database : process.env.DB_DATABASE
     })
 
-exports.create = (req,res)=>{
-    if (req.session.userId){
+    exports.create = (req,res)=>{
+       if (req.session.userId){
          return res.render("create_post")
     }
          return res.redirect("/auth/login")
@@ -21,8 +21,8 @@ exports.create = (req,res)=>{
 }
 
 
-exports.store = (req,res)=>{
-    pool.getConnection((err,connection)=>{
+    exports.store = (req,res)=>{
+      pool.getConnection((err,connection)=>{
         if (err) throw err
 
         // console.log("connected");

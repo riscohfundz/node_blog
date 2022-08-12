@@ -54,6 +54,7 @@ exports.login = (req, res)=>{
             }else{
                 if (user.length > 0) {
                     const comparision = await bcrypt.compare(password,user[0].password)
+                    console.log(user);
                     if (comparision) {
                      req.session.userId = user[0].id
                      return res.redirect("/")

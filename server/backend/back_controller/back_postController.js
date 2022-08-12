@@ -12,8 +12,10 @@ const pool = mysql.createPool({
  
 
 })
+   
+     // DASHBOARD POST
 
-exports.dash = (req, res)=>{
+    exports.dash = (req, res)=>{
     pool.getConnection((err,connection)=>{
         if (err) throw err;
          var sql = `SELECT * FROM node_apps`
@@ -32,38 +34,28 @@ exports.dash = (req, res)=>{
     })
 }
 
-
+     // VIEW POST
 
     exports.backPost = (req, res)=>{
      pool.getConnection((err,connection)=>{
         if (err) throw err;
-        // console.log("we are connected");
 
-
-        console.log(req.files);
-    })
-}
-        
-        // const {post_img} = req.files
-
-        // const {title, subtitle, content, username} = req.body
-
-        // const filename = path.resolve(__dirname,"../../../public/backend/post_img2/",post_img.name)
-        // post_img.mv(filename,(err,connection)=>{
-        // var sql = `SELECT * FROM node_apps title=?, subtitle=?, content=?, username=?, post_img=?`
-        // pool.query(sql,[title, subtitle, content, username],`/post_img2/${post_img.name}`,(err,post)=>{
-        //         connection.release()
-        //         if (!err){
-        //             res.render("backend/backPost",{
-        //                 post:post
-        //             })
+           const {title, subtitle, content, username} = req.body
+            var sql = `SELECT * FROM node_apps`       
+      pool.query(sql,[title, subtitle, content, username],(err,post)=>{
+                connection.release()
+                if (!err){
+                    res.render("backend/backPost",{
+                        post:post
+                    })
     
-        //         }else{
-        //             throw err
-        //         }
+                }else{
+                    throw err
+                }
 
-        // })
+        })
             
-        // })
+        })
     
+}
    
