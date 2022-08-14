@@ -175,15 +175,15 @@ const pool = mysql.createPool({
 //    });
 
 //    app.get("/delete",(req,res)=>{
-//     con.connect((err)=>{
-//         var sql = `DELETE FROM node_apps WHERE id = 4`
-//         con.query(sql,(err,data)=>{
-//             res.send(data)
+//     pool.getConnection((err,connection)=>{
+//         var sql = `DELETE FROM node_apps`
+//         connection.query(sql,(err,data)=>{
+//             res.send("post deleted all")
 //         })
 //     })
 //    })
 
-
+ 
 
 
    
