@@ -5,8 +5,12 @@ const rioter  = express.Router()
 
 const postController = require("../controllers/postController")
 
-rioter.get("/create/post", postController.create)
-rioter.post("/store/post", postController.store)
+const user = require("../../middleware/postStore") 
+const auth = require("../../middleware/auth")
+
+
+rioter.get("/create/post",auth, postController.create)
+rioter.post("/store/post",auth,user, postController.store)
 
 
 module.exports = rioter

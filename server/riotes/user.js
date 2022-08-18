@@ -5,13 +5,15 @@ const rioute = express.Router()
 
 const userController = require("../controllers/userController")
 
-rioute.get("/auth/user",userController.register)
+const redirectedIfAuthenticated = require("../../middleware/redirectIfAuthenticated")
 
-rioute.post("/post/user",userController.stores)
+rioute.get("/auth/user",redirectedIfAuthenticated,userController.register)
+
+rioute.post("/post/user",redirectedIfAuthenticated,userController.stores)
 
 
-rioute.get("/auth/login",userController.loginForm)
+rioute.get("/auth/login",redirectedIfAuthenticated,userController.loginForm)
 
-rioute.post("/login/user",userController.login)
+rioute.post("/login/user",redirectedIfAuthenticated,userController.login)
 
 module.exports = rioute

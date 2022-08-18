@@ -1,7 +1,6 @@
 
 
     const path = require('path')
-
     const mysql = require("mysql")
 
     const pool = mysql.createPool({
@@ -13,12 +12,8 @@
     })
 
     exports.create = (req,res)=>{
-       if (req.session.userId){
-         return res.render("create_post")
-    }
-         return res.redirect("/auth/login")
-
-}
+      return res.render("create_post")
+  }
 
 
     exports.store = (req,res)=>{
