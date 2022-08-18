@@ -1,9 +1,12 @@
 
 const express = require('express')
+const mysql = require("mysql")
 const path = require('path')
 const {config, engine} = require("express-edge")
 const expressFileUpload = require("express-fileupload")
 const expressSession = require("express-session")
+const mysqlStore = require("express-mysql-session")(expressSession)
+const edge = require('edge.js')
 
 require ('dotenv').config()
 // console.log(process.env);
@@ -19,14 +22,32 @@ app.use(express.urlencoded({extended : true}))
 
 app.use(expressFileUpload())
 
+const options = {
+    connectionLimit : 100,
+    host : process.env.DB_HOST,
+    user : process.env.DB_USER,
+    password : process.env.DB_PASS,
+    database : process.env.DB_DATABASE
+    }
+
+    const db_conn = mysql.createPool(options)
+ var session_store = new mysqlStore({}, db_conn)
+
+
 app.use(expressSession({
-    secret:"secret"
+    secret                :       "secret",
+    store                 :       session_store,
+    proxy                 :       true,
+    resave                :       false,
+    saveUninitialized     :       false
 }))
 
+app.use("*",(req,res,next)=>{
+    app.locals.auth = req.session.userId
+    next()
+})
 // USER CODER
-const user = require("./middleware/postStore") 
 
-app.use("/store/post", user)
 
 // var con = mysql.createConnection({
 //     host: "localhost",
@@ -35,17 +56,15 @@ app.use("/store/post", user)
 //     database: "project",
 // })
 
+// const pool = mysql.createPool({
+//     connectionLimit : 100,
+//     host : process.env.DB_HOST,
+//     user : process.env.DB_USER,
+//     password : process.env.DB_PASS,
+//     database : process.env.DB_DATABASE
+//     });
 
-const mysql = require("mysql")
-
-const pool = mysql.createPool({
-    connectionLimit : 100,
-    host : process.env.DB_HOST,
-    user : process.env.DB_USER,
-    password : process.env.DB_PASS,
-    database : process.env.DB_DATABASE
-    })
-
+    
 
 
 // app.get("/create_db",(req,res)=>{
@@ -133,6 +152,7 @@ const pool = mysql.createPool({
        
       // USER CODER
       const register = require("./server/riotes/user")
+const session = require('express-session')
       app.use("/", register)
 
 //     app.get("/update",(req,res)=>{
