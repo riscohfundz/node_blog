@@ -1,0 +1,62 @@
+
+
+@layout("layouts/app")
+
+@section("main_content")
+
+
+
+  <!-- Page Header-->
+        <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Edit post</h1>
+                            <span class="subheading">Creating post to be viewed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+
+    <form method ="POST" action ="/update/post" enctype= "multipart/form-data">
+            <div class="mb-3">
+                    <label form="title" class="form-label">Edit post</label>
+                    <input name="title" type="text" class="form-control" id="title" placeholder="Enter title">
+            </div>
+
+             <div class="mb-3">
+                    <label form="subtitle" class="form-label">subtitle</label>
+                    <input name="subtitle" type="text" class="form-control" id="subtitle" placeholder="Enter subtitle">
+            </div>
+    
+            <div class="mb-3">
+                <label form="content" class="form-label">Content texarea</label>
+                <textarea name="content" class="form-control" id="content" rows="3"></textarea>
+            </div>
+
+            
+            <div class="mb-3">
+                <label form="file image" class="form-label">Post Image</label><br>
+                <input  class="form- control" name="post_img" type="file">
+            </div>
+
+                <button class="btn btn-primary col-sm" type="submit">Create Post</button>
+        <br><br>
+    </form>
+
+       </div>
+      </div>
+ </div>
+
+
+
+@endsection

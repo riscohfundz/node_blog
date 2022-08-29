@@ -1,8 +1,7 @@
 
-
-module.exports= (req, res, next)=>{
+module.exports = async (req, res, next)=>{
   if (req.session.userId){
-    return res.redirect("/")
+    return await res.redirect("/")
 
   }
   

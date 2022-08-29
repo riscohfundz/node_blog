@@ -14,9 +14,9 @@ exports.index = (req, res) =>{
     
    pool.getConnection((err,connection)=>{
       if (err) throw err
-      console.log(`we are connected ID: ${connection.throwID}`);
+      // console.log(`we are connected ID: ${connection.throwID}`);
       var sql = `SELECT * FROM node_apps`
-      console.log(sql);
+      // console.log(sql);
       connection.query(sql,(err,post)=>{
          connection.release()
          if (!err){
@@ -25,7 +25,7 @@ exports.index = (req, res) =>{
          }else{
             throw err
          }
-        console.log(`data created from post table :\n`, post);
+      //   console.log(`data created from post table :\n`, post);
       })
 
    })
@@ -40,23 +40,24 @@ exports.index = (req, res) =>{
    
  }
 
- exports.post = (req, res)=>{
-   pool.getConnection((err,connection)=>{
-    if (err) throw err;
-    const para = req.params.id
-    var sql = `SELECT * FROM node_apps WHERE id=?`
-    connection.query(sql,[para],(err,post)=>{
+      exports.post = (req, res)=>{
+      pool.getConnection((err,connection)=>{
+      if (err) throw err;
+      const para = req.params.id
+      var sql = `SELECT * FROM node_apps WHERE id=?`
+      connection.query(sql,[para],(err,post)=>{
       if (!err){
-         connection.release()
-         res.render("post",{post:post[0]})
+      connection.release()
+      res.render("post",{post:post[0]})
       }else{
-         throw err;
+      throw err;
       }
-    })
+
+     })
 
    })
-    
- }
+
+   }
 
  exports.contact = (req, res)=>{
     

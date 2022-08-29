@@ -47,22 +47,22 @@ app.use("*",(req,res,next)=>{
     next()
 })
 // USER CODER
+  
 
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "project",
+})
 
-// var con = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "project",
-// })
-
-// const pool = mysql.createPool({
-//     connectionLimit : 100,
-//     host : process.env.DB_HOST,
-//     user : process.env.DB_USER,
-//     password : process.env.DB_PASS,
-//     database : process.env.DB_DATABASE
-//     });
+const pool = mysql.createPool({
+    connectionLimit : 100,
+    host : process.env.DB_HOST,
+    user : process.env.DB_USER,
+    password : process.env.DB_PASS,
+    database : process.env.DB_DATABASE
+     });
 
     
 
@@ -99,6 +99,24 @@ app.use("*",(req,res,next)=>{
 //         sql += "content VARCHAR (200))"
 
 //         pool.query(sql,(err,result)=>{ 
+//             if (err) throw err
+
+//             res.send("Table created successfully!")
+
+//         })
+//     })
+// })
+
+
+// app.get("/create_table",(req,res)=>{
+
+//  pool.getConnection((err,connection)=>{
+
+//    console.log("we are connected!");
+
+//     var sql = `CREATE TABLE node_apps(id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR (225) not null, subtitle VARCHAR (225) not null, content TEXT not null, post_img VARCHAR (225), created_at DATETIME DEFAULT CURRENT_TIMESTAMP, user_id int not null, foreign key (user_id) references users(id) on delete cascade on update cascade);`
+
+//         connection.query(sql,(err,result)=>{ 
 //             if (err) throw err
 
 //             res.send("Table created successfully!")
@@ -152,7 +170,7 @@ app.use("*",(req,res,next)=>{
        
       // USER CODER
       const register = require("./server/riotes/user")
-const session = require('express-session')
+      const session = require('express-session')
       app.use("/", register)
 
 //     app.get("/update",(req,res)=>{

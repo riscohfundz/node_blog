@@ -34,17 +34,17 @@
         // console.log(req.files);
         const {post_img} = req.files
 
-        const {title, subtitle, content,username} = req.body
+        const {title, subtitle, content} = req.body
         
         const filename = path.resolve(__dirname,"../../public/post_image/",post_img.name)
 
          post_img.mv(filename,(err,connection)=>{
             
-            var sql = `INSERT INTO node_apps SET title=?, subtitle=?, content=?, username=?, post_img=?`
+            var sql = `INSERT INTO node_apps SET title=?, subtitle=?, content=?, post_img=?,  user_id=?`
 
-            pool.query(sql,[title, subtitle, content, username,`/post_image/${post_img.name}`],(err,data)=>{
+            pool.query(sql,[title, subtitle, content,`/post_image/${post_img.name}`, req.session. userId],(err,data)=>{
                 if (err) throw err
-                    res.redirect("/")
+                return  res.redirect("/")
     
             })
        
@@ -54,3 +54,55 @@
         })
       
 }
+
+        exports.edit = (req, res)=>{
+          
+        pool.getConnection((err,connection)=>{
+        if (err) throw err
+        const para = req.params.id
+        var sql = ` SELECT * FROM node_apps WHERE id=?`
+        
+        connection.query(sql,[para],(err,post)=>{
+       connection.release()
+        if (!err){
+        res.render("edit_post",{
+        post: post[0]
+        })
+
+        }else{
+           throw err
+      }
+
+
+    })
+
+      })
+  }
+
+        exports.update = (req, res)=>{
+
+        pool.getConnection((err,connection)=>{
+        if (err) throw err
+        
+        const {post_img} = req.files 
+        const para = req.params.id  
+        const filename = path.resolve(__dirname,"../../public/post_image/",post_img.name)
+        const {title, subtitle, content,} = req.body
+        post_img.mv(filename,(err)=>{
+          
+          var sql = `UPDATE node_apps SET title=?, subtitle=?, content=?, post_img=? WHERE id=?`
+          pool.connection(sql,[title, subtitle, content,`/post_image/${post_img.name}`,para],(err,result)=>{
+  
+          if (err) throw err
+          res.redirect("/")
+
+          })
+  
+  
+            })
+
+
+        }) 
+
+    
+        }
