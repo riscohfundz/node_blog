@@ -7,13 +7,13 @@
 
 
   <!-- Page Header-->
-        <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
+        <header class="masthead" style="background-image: url('{{post.post_img}}')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
                             <h1>Edit post</h1>
-                            <span class="subheading">Creating post to be viewed</span>
+                            <span class="subheading">Post Editing</span>
                         </div>
                     </div>
                 </div>
@@ -27,29 +27,29 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
 
-    <form method ="POST" action ="/update/post" enctype= "multipart/form-data">
+    <form method ="POST" action ="/update/post/{{post.id}}" enctype= "multipart/form-data">
             <div class="mb-3">
-                    <label form="title" class="form-label">Edit post</label>
-                    <input name="title" type="text" class="form-control" id="title" placeholder="Enter title">
+                    <label form="title" class="form-label"{{post.title}}>Title</label>
+                    <input name="title" value="{{post.title}}" type="text" class="form-control" id="title" placeholder="Enter title">
             </div>
 
              <div class="mb-3">
-                    <label form="subtitle" class="form-label">subtitle</label>
+                    <label form="subtitle" class="form-label"{{post.subtitle}}>Subtitle</label>
                     <input name="subtitle" type="text" class="form-control" id="subtitle" placeholder="Enter subtitle">
             </div>
     
             <div class="mb-3">
                 <label form="content" class="form-label">Content texarea</label>
-                <textarea name="content" class="form-control" id="content" rows="3"></textarea>
+                <textarea name="content" class="form-control" id="content" rows="3">{{post.content}}</textarea>
             </div>
 
             
             <div class="mb-3">
                 <label form="file image" class="form-label">Post Image</label><br>
-                <input  class="form- control" name="post_img" type="file">
+                <input  id="post_img" value="{{post.post_img}}" class="form-control" name="post_img" type="file">
             </div>
 
-                <button class="btn btn-primary col-sm" type="submit">Create Post</button>
+                <button class="btn btn-primary col-sm" type="submit" value="/update/{{post/post.id}}">Update Post</button>
         <br><br>
     </form>
 

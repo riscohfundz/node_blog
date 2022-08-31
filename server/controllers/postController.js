@@ -40,9 +40,10 @@
 
          post_img.mv(filename,(err,connection)=>{
             
-            var sql = `INSERT INTO node_apps SET title=?, subtitle=?, content=?, post_img=?,  user_id=?`
+            var sql = `INSERT INTO node_apps SET title=?, subtitle=?, content=?, post_img=?,user_id=?`
 
-            pool.query(sql,[title, subtitle, content,`/post_image/${post_img.name}`, req.session. userId],(err,data)=>{
+            pool.query(sql,[title, subtitle, content,`/post_image/${post_img.name}`, req.session.userId],(err,data)=>{
+              // console.log(req.session.userId);
                 if (err) throw err
                 return  res.redirect("/")
     
@@ -60,13 +61,16 @@
         pool.getConnection((err,connection)=>{
         if (err) throw err
         const para = req.params.id
+        // console.log(para);
         var sql = ` SELECT * FROM node_apps WHERE id=?`
         
         connection.query(sql,[para],(err,post)=>{
-       connection.release()
+        connection.release()
         if (!err){
+          // console.log(post);
         res.render("edit_post",{
         post: post[0]
+
         })
 
         }else{
@@ -91,7 +95,7 @@
         post_img.mv(filename,(err)=>{
           
           var sql = `UPDATE node_apps SET title=?, subtitle=?, content=?, post_img=? WHERE id=?`
-          pool.connection(sql,[title, subtitle, content,`/post_image/${post_img.name}`,para],(err,result)=>{
+          pool.query(sql,[title, subtitle, content,`/post_image/${post_img.name}`,para],(err,result)=>{
   
           if (err) throw err
           res.redirect("/")
