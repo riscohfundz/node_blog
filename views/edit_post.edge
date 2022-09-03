@@ -4,7 +4,7 @@
 
 @section("main_content")
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
 
   <!-- Page Header-->
         <header class="masthead" style="background-image: url('{{post.post_img}}')">
@@ -34,8 +34,8 @@
             </div>
 
              <div class="mb-3">
-                    <label form="subtitle" class="form-label"{{post.subtitle}}>Subtitle</label>
-                    <input name="subtitle" type="text" class="form-control" id="subtitle" placeholder="Enter subtitle">
+                    <label form="subtitle" class="form-label">Subtitle</label>
+                    <input name="subtitle" type="text" class="form-control" value="{{post.subtitle}}" id="subtitle" placeholder="Enter subtitle">
             </div>
     
             <div class="mb-3">
@@ -46,10 +46,14 @@
             
             <div class="mb-3">
                 <label form="file image" class="form-label">Post Image</label><br>
-                <input  id="post_img" value="{{post.post_img}}" class="form-control" name="post_img" type="file">
+                <input  id="show_img" src="{{post.post_img}}" class="form-control" name="post_img" type="file">
             </div>
 
-                <button class="btn btn-primary col-sm" type="submit" value="/update/{{post/post.id}}">Update Post</button>
+            <div class="mb-3">
+                <img id="show_img" src="{{post.post_img}}" width="400" height="200">
+            </div>
+
+                <button class="btn btn-primary col-sm" type="submit" value="/update/post/{{post.id}}">Update Post</button>
         <br><br>
     </form>
 
@@ -57,6 +61,19 @@
       </div>
  </div>
 
+<script>
+$(document).ready(()=>{
+    //get where the image coming from 
+    $("#post_img").change((e)=>{
+        var render = new FileReader()
+        render.onload = (e) =>{
+            //where to image preview 
+            $("#show_img").attr("src", e.target.result)
+        }
+        render.readAsDataURL(e.target.files["0"])
+    })
+})
+</script>
 
 
 @endsection

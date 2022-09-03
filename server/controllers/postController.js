@@ -96,6 +96,7 @@
           
           var sql = `UPDATE node_apps SET title=?, subtitle=?, content=?, post_img=? WHERE id=?`
           pool.query(sql,[title, subtitle, content,`/post_image/${post_img.name}`,para],(err,result)=>{
+            // console.log(result);
   
           if (err) throw err
           res.redirect("/")
@@ -110,3 +111,29 @@
 
     
         }
+
+
+        exports.delete = (req, res)=>{
+
+          pool.getConnection((err,connection)=>{
+          if (err) throw err
+          const para = req.params.id
+          
+            var sql = `DELETE FROM node_apps  WHERE id=?`
+            connection.query(sql,para,(err,result)=>{
+              connection.release()
+              // console.log(result);
+    
+            if (err) throw err
+            res.redirect("/")
+  
+            })
+    
+    
+              })
+  
+  
+        
+  
+      
+          }

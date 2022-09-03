@@ -14,7 +14,7 @@ rioter.post("/store/post",auth,user, postController.store)
 
 rioter.get("/edit/post/:id",auth, postController.edit)
 rioter.post("/update/post/:id",auth, postController.update)
-
+rioter.get("/delete/post/:id",auth,postController.delete)
 
 
 module.exports = rioter

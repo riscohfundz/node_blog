@@ -20,7 +20,7 @@ exports.stores = (req,res)=>{
    pool.getConnection((err,connection)=>{
     if (err) throw err
 
-     const {username,email,password}= req.body;
+     const {username,email,password} = req.body;
      const saltRounds = 10;
      const salt = bcrypt.genSaltSync(saltRounds);
      const hash = bcrypt.hashSync(password,salt);
